@@ -5,7 +5,7 @@ desired_capabilities = {
     'platformName': "Android",
     'platformVersion': "12.0",
     'deviceName': "Pixel 5",
-    'app': "ПУТЬ К APK ФАЙЛУ"
+    'app': "/Users/sadness_azathoth/Library/Android/yandex_market.v4.33.3028.apk"
 }
 
 

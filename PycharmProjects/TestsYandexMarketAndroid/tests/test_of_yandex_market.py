@@ -15,11 +15,11 @@ class TestSearch:
         search.click_on_search_field()
         search.write_playstation5()
         search.click_on_search_button()
-        search.wait_on_element_text()
+        search.sort_items_by_discount_and_approve()
 
 
 class TestSwipe:
-    def test_swipe_Images_in_product_card(self, mobile_driver):
+    def test_swipe_images_in_product_card(self, mobile_driver):
         """
         test of swiping images in product card
         """
