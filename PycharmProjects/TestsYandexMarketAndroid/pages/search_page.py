@@ -38,34 +38,23 @@ class Locators:
                           '.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup'
                           '/android.widget.ImageButton')
 
-    PRODUCT_CARD_1 = (By.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget'
-                                '.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget'
-                                '.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget'
-                                '.FrameLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget'
-                                '.ScrollView/android.widget.FrameLayout/android.widget.FrameLayout/androidx'
-                                '.recyclerview.widget.RecyclerView/android.view.ViewGroup['
-                                '1]/android.widget.LinearLayout/android.widget.TextView')
+    ITEM_1 = (By.XPATH, '(//android.widget.FrameLayout[@content-desc="В корзину"])['
+                        '4]/android.widget.FrameLayout')
 
-    PRODUCT_CARD_2 = (By.XPATH,
-                      '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout'
-                      '/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android'
-                      '.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget'
-                      '.FrameLayout/android.widget.LinearLayout/android.widget.ScrollView/android.widget.FrameLayout'
-                      '/android.widget.FrameLayout/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup['
-                      '2]/android.widget.LinearLayout/android.widget.TextView')
+    ITEM_2 = (By.XPATH, '(//android.widget.FrameLayout[@content-desc="В корзину"])['
+                        '5]/android.widget.FrameLayout')
 
-    PRODUCT_CARD_3 = (By.XPATH,
-                      '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout'
-                      '/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android'
-                      '.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget'
-                      '.FrameLayout/android.widget.LinearLayout/android.widget.ScrollView/android.widget.FrameLayout'
-                      '/android.widget.FrameLayout/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup['
-                      '3]/android.widget.LinearLayout/android.widget.TextView')
+    REMOVE_ITEM = (By.XPATH, '/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget'
+                             '.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget'
+                             '.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget'
+                             '.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget'
+                             '.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget'
+                             '.FrameLayout/android.widget.LinearLayout/androidx.recyclerview.widget.RecyclerView'
+                             '/android.view.ViewGroup[1]/android.widget.LinearLayout[2]/android.widget.ImageButton')
 
-    DISCOUNT_LABEL = (By.XPATH, '//androidx.recyclerview.widget.RecyclerView['
-                                '@content-desc="product_root_recycler"]/android.widget.LinearLayout/android.view'
-                                '.ViewGroup/android.widget.LinearLayout/android.widget.LinearLayout['
-                                '1]/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.TextView')
+    CARD = (By.ID, 'ru.beru.android:id/nav_cart')
+
+    PRODUCT_CARD = (By.ID, 'ru.beru.android:id/productContainer')
 
 
 class SearchPage(BasePage):
@@ -81,9 +70,6 @@ class SearchPage(BasePage):
     def click_on_search_button(self):
         self.find_element(Locators.SEARCH_BUTTON).click()
 
-    def click_on_the_product_card(self):
-        self.find_element(Locators.PRODUCT_CARD_1).click()
-
     def swipe_element(self):
         self._driver.swipe(980, 700, 100, 750, 500)
         self._driver.swipe(980, 700, 100, 750, 500)
@@ -91,29 +77,23 @@ class SearchPage(BasePage):
         self._driver.swipe(100, 750, 980, 700, 500)
         self._driver.swipe(100, 750, 980, 700, 500)
 
-    def sort_items_by_discount_and_approve(self):
-        self.find_element(Locators.SORT_BUTTON).click()
-        self.find_element(Locators.DISCOUNT_BUTTON).click()
-        self.find_element(Locators.PRODUCT_CARD_1).click()
+    def add_items_to_card(self):
+        self.find_element(Locators.PRODUCT_CARD).is_displayed()
 
-        # get discount of 1st element
-        a = self.find_element(Locators.DISCOUNT_LABEL).get_attribute('text')
-        str1 = str(a.replace(' ', '').replace('%', ''))
-        self.find_element(Locators.CLOSE_PRODUCT_CARD).click()
+        self._driver.swipe(500, 1450, 540, 660, 700)
 
-        # get discount of 2st element
-        self.find_element(Locators.PRODUCT_CARD_2).click()
-        b = self.find_element(Locators.DISCOUNT_LABEL).get_attribute('text')
-        str2 = str(b.replace(' ', '').replace('%', ''))
-        self.find_element(Locators.CLOSE_PRODUCT_CARD).click()
+        self.find_element(Locators.ITEM_1).click()
+        self.find_element(Locators.ITEM_2).click()
 
-        # get discount of 3st element
-        self.find_element(Locators.PRODUCT_CARD_3).click()
-        c = self.find_element(Locators.DISCOUNT_LABEL).get_attribute('text')
-        str3 = str(c.replace(' ', '').replace('%', ''))
-        self.find_element(Locators.CLOSE_PRODUCT_CARD).click()
+    def go_to_card(self):
 
-        if str1 > str2 and str2 > str3:
-            return True
-        else:
-            return False
+        self.find_element(Locators.CARD).click()
+
+        self._driver.swipe(550, 990, 540, 670, 700)
+
+    def remove_items_from_card(self):
+        self.find_element(Locators.REMOVE_ITEM).click()
+        self.find_element(Locators.REMOVE_ITEM).click()
+
+    def click_on_the_product_card(self):
+        self.find_element(Locators.PRODUCT_CARD).click()

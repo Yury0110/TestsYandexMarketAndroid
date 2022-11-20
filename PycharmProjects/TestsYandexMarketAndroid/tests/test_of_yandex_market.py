@@ -5,9 +5,9 @@ import time
 
 
 class TestSearch:
-    def test_search_of_search_result(self, mobile_driver):
+    def test_add_product_in_card_and_delete_from_card(self, mobile_driver):
         """
-        test of search result
+        test of add and remove items from card
         """
         close = BasePage(mobile_driver)
         close.close_banners()
@@ -15,7 +15,9 @@ class TestSearch:
         search.click_on_search_field()
         search.write_playstation5()
         search.click_on_search_button()
-        search.sort_items_by_discount_and_approve()
+        search.add_items_to_card()
+        search.go_to_card()
+        search.remove_items_from_card()
 
 
 class TestSwipe:
